@@ -22,3 +22,8 @@
 - **已复制源码**: [ConsistentTeacher](https://github.com/Adamdad/ConsistentTeacher.git)
 - **已复制源码**: [CutLER](https://github.com/facebookresearch/CutLER.git)
 - **已复制源码**: [InternImage](https://github.com/OpenGVLab/InternImage.git)
+- **已复制源码**: [Practise](https://github.com/DoctorKey/Practise.git)
+- **已复制源码**: [ConvNeXt-V2](https://github.com/facebookresearch/ConvNeXt-V2.git)
+- **已复制源码**: [NViT](https://github.com/NVlabs/NViT.git)
+- **已复制源码**: [Semi-DETR](https://github.com/JCZ404/Semi-DETR.git)
+- **已复制源码**: [BiFormer](https://github.com/rayleizhu/BiFormer.git)
