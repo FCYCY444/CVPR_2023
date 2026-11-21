@@ -7,3 +7,8 @@
 - **已复制源码**: [Torch-Pruning](https://github.com/VainF/Torch-Pruning.git)
 - **已复制源码**: [MixTeacher](https://github.com/lliuz/MixTeacher.git)
 - **已复制源码**: [CEASC](https://github.com/Cuogeihong/CEASC.git)
+- **已复制源码**: [CMT](https://github.com/Shengcao-Cao/CMT.git)
+- **已复制源码**: [sparsevit](https://github.com/mit-han-lab/sparsevit.git)
+- **已复制源码**: [Harmonious-Teacher](https://github.com/kinredon/Harmonious-Teacher.git)
+- **已复制源码**: [H-Deformable-DETR](https://github.com/HDETR/H-Deformable-DETR.git)
+- **已复制源码**: [Lite-DETR](https://github.com/IDEA-Research/Lite-DETR.git)
