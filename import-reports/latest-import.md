@@ -37,3 +37,8 @@
 - **已复制源码**: [INBD](https://github.com/alexander-g/INBD.git)
 - **已复制源码**: [YOSO](https://github.com/hujiecpp/YOSO.git)
 - **已复制源码**: [PointWSSIS](https://github.com/clovaai/PointWSSIS.git)
+- **已复制源码**: [MaskDINO](https://github.com/IDEA-Research/MaskDINO.git)
+- **已复制源码**: [CLIP-ES](https://github.com/linyq2117/CLIP-ES.git)
+- **已复制源码**: [SimpleNet](https://github.com/DonaldRR/SimpleNet.git)
+- **已复制源码**: [cts-segmenter](https://github.com/tue-mps/cts-segmenter.git)
+- **已复制源码**: [DGCL](https://github.com/Gavinwxy/DGCL.git)
