@@ -12,3 +12,8 @@
 - **已复制源码**: [Harmonious-Teacher](https://github.com/kinredon/Harmonious-Teacher.git)
 - **已复制源码**: [H-Deformable-DETR](https://github.com/HDETR/H-Deformable-DETR.git)
 - **已复制源码**: [Lite-DETR](https://github.com/IDEA-Research/Lite-DETR.git)
+- **已复制源码**: [o2f](https://github.com/strongwolf/o2f.git)
+- **已复制源码**: [PaddleDetection](https://github.com/PaddlePaddle/PaddleDetection.git)
+- **已复制源码**: [Cream](https://github.com/microsoft/Cream.git)
+- **已复制源码**: [PD-Quant](https://github.com/hustvl/PD-Quant.git)
+- **已复制源码**: [MRECG](https://github.com/bytedance/MRECG.git)
