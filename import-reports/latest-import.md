@@ -17,3 +17,8 @@
 - **已复制源码**: [Cream](https://github.com/microsoft/Cream.git)
 - **已复制源码**: [PD-Quant](https://github.com/hustvl/PD-Quant.git)
 - **已复制源码**: [MRECG](https://github.com/bytedance/MRECG.git)
+- **已复制源码**: [saod](https://github.com/fiveai/saod.git)
+- **已复制源码**: [ml-mobileone](https://github.com/apple-aiml-research/ml-mobileone.git)
+- **已复制源码**: [ConsistentTeacher](https://github.com/Adamdad/ConsistentTeacher.git)
+- **已复制源码**: [CutLER](https://github.com/facebookresearch/CutLER.git)
+- **已复制源码**: [InternImage](https://github.com/OpenGVLab/InternImage.git)
