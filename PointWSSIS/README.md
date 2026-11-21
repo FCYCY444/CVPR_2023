@@ -1,0 +1,143 @@
+# PointWSSIS (CVPR 2023)
+
+**The Devil is in the Points: Weakly Semi-Supervised Instance Segmentation via Point-Guided Mask Representation** <br />
+[Beomyoung Kim](https://beomyoung-kim.github.io/)<sup>1,2</sup>, [Joonhyun Jeong](https://bestdeveloper691.github.io/)<sup>1,2</sup>, [Dongyoon Han](https://sites.google.com/site/dyhan0920/)<sup>3</sup>, [Sung Ju Hwang](http://www.sungjuhwang.com/)<sup>2</sup><br>
+
+<sup>1</sup> <sub>NAVER Cloud, ImageVision</sub><br />
+<sup>2</sup> <sub>KAIST</sub><br />
+<sup>3</sup> <sub>NAVER AI Lab</sub><br />
+
+[![](https://img.shields.io/badge/CVPR-2023-blue)](https://cvpr.thecvf.com/Conferences/2023)
+[![Paper](https://img.shields.io/badge/Paper-arxiv.2303.15062-red)](https://arxiv.org/abs/2303.15062)
+
+</div>
+
+![demo image](https://github.com/clovaai/PointWSSIS/releases/download/Figures/overview.gif)
+
+## Introduction
+
+We introduce a novel learning scheme named weakly semi-supervised instance segmentation (WSSIS) with point labels for budget-efficient and high-performance instance segmentation. Namely, we consider a dataset setting consisting of a few fully-labeled images and a lot of point-labeled images. Motivated by the main challenge of semi-supervised approaches mainly derives from the trade-off between false-negative and false-positive instance proposals, we propose a method for WSSIS that can effectively leverage the budget-friendly point labels as a powerful weak supervision source to resolve the challenge. Furthermore, to deal with the hard case where the amount of fully-labeled data is extremely limited, we propose a MaskRefineNet that refines noise in rough masks. We conduct extensive experiments on COCO and BDD100K datasets, and the proposed method achieves promising results comparable to those of the fully-supervised model, even with 50% of the fully labeled COCO data (38.8% vs. 39.7%). Moreover, when using as little as 5% of fully labeled COCO data, our method shows significantly superior performance over the state-of-the-art semi-supervised learning method (33.7% vs. 24.9%). 
+
+
+## Updates    
+**_2023-05-19_** First Commit, We release the official implementation of PointWSSIS.  
+
+
+## Installation
+
+Our implementation is based on [Detectron2](https://github.com/facebookresearch/detectron2) and [AdelaiDet](https://github.com/aim-uofa/AdelaiDet).
+
+Please install Detectron2 and AdelaiDet in our repository (there are some modifications, [check here](https://github.com/clovaai/PointWSSIS/blob/main/AdelaiDet/adet/modeling/solov2/solov2.py)).
+
+~~~
+git clone https://github.com/clovaai/PointWSSIS.git
+
+cd PointWSSIS/detectron2
+python3 setup.py build develop --user
+
+cd ../AdelaiDet
+python3 setup.py build develop --user
+~~~
+
+Please check environment requirements and official guideline https://github.com/aim-uofa/AdelaiDet#installation.
+
+
+## Data Preparation
+
+For [COCO 2017 dataset](https://cocodataset.org/#download), we made subsets 1%, 2%, 5%, 10%, 20%, 30%, 50%.
+- coco 5p: strong 5% + weak 95%
+- coco 10p: strong 10% + weak 90%
+- coco 20p: strong 20% + weak 80%
+- coco 50p: strong 50% + weak 50%
+
+All subsets are available: [[coco2017 dataset]](https://github.com/clovaai/PointWSSIS/releases/tag/annotation_coco) and [[BDD100K dataset]](https://github.com/clovaai/PointWSSIS/releases/tag/annotation_bdd100k)
+- instances_train2017_{subset}_s.json : strong (fully-labeled) data subset.
+- instances_train2017_{subset}_w.json : weak (point-labeled) data subset.
+
+We also provide our pseudo labels for training the student network:
+- instances_train2017_{subset}_sw.json : strong and weak (pseudo labels without MaskRefineNet) annotations
+- instances_train2017_{subset}_sw_refined.json : strong and weak (pseudo labels with MaskRefineNet) annotations
+
+~~~
+data_root/
+    --- coco/
+        --- train2017/
+        --- val2017/
+        --- annotations/
+            --- instances_val2017.json
+            --- instances_train2017.json
+            --- instances_train2017_10p_s.json
+            --- instances_train2017_10p_w.json
+            --- instances_train2017_10p_sw.json (optional)
+            --- instances_train2017_10p_sw_refined.json (optional)
+~~~
+
+## Quick Start
+
+1. Training teacher network using strong labels
+2. Training MaskRefineNet using strong labels
+3. Generating pseudo labels using weak labels
+4. Training student network using strong and pseudo labels
+
+Run all-in-one script.
+~~~
+bash scripts/coco_5p.sh # coco 5% scenario
+bash scripts/coco_10p.sh # coco 10% scenario
+bash scripts/coco_20p.sh # coco 20% scenario
+bash scripts/coco_50p.sh # coco 50% scenario
+~~~
+
+## Experimental Results
+
+|   Subset   |  Teacher Network   |    MaskRefineNet    |  Pseudo Labels | Student Network  | COCO test-dev |
+| :--------: | :----------------: | :-----------------: | :--------------:  | :------:  | :------:  |
+| COCO 1%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_1p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_1p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_1p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_1p_student.pth) | 24.0% |
+| COCO 2%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_2p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_2p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_2p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_2p_student.pth) | 25.3% |
+| COCO 5%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_3p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_3p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_3p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_3p_student.pth) | 33.7% |
+| COCO 10%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_10p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_10p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_10p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_10p_student.pth) | 35.8% |
+| COCO 20%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_20p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_20p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_20p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_20p_student.pth) | 37.1% |
+| COCO 30%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_30p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_30p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_30p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_30p_student.pth) | 38.0% |
+| COCO 40%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_40p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_40p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_40p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_40p_student.pth) | 38.3% |
+| COCO 50%    | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_50p_teacher.pth) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_50p_MRN.pt) | [json](https://github.com/clovaai/PointWSSIS/releases/download/annotation_coco/instances_train2017_50p_sw_refined.json) | [ckpt](https://github.com/clovaai/PointWSSIS/releases/download/ckpt/coco_50p_student.pth) | 38.8% |
+
+
+<div align="center">
+
+<img src="https://github.com/clovaai/PointWSSIS/releases/download/Figures/pseudo_label.png" width="100%"/>
+<br />
+<br />
+
+<img src="https://github.com/clovaai/PointWSSIS/releases/download/Figures//results.png" width="100%"/>
+
+</div>
+
+
+
+## How to Cite
+```
+@inproceedings{kim2023devil,
+  title={The Devil is in the Points: Weakly Semi-Supervised Instance Segmentation via Point-Guided Mask Representation},
+  author={Kim, Beomyoung and Jeong, Joonhyun and Han, Dongyoon and Hwang, Sung Ju},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={11360--11370},
+  year={2023}
+}
+```
+
+## License
+```
+PointWSSIS 
+Copyright (c) 2023-present NAVER Cloud Corp.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

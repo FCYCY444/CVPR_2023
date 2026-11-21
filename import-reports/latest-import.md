@@ -32,3 +32,8 @@
 - **已复制源码**: [BoxTeacher](https://github.com/hustvl/BoxTeacher.git)
 - **已复制源码**: [FastInst](https://github.com/junjiehe96/FastInst.git)
 - **已复制源码**: [PIDNet](https://github.com/XuJiacong/PIDNet.git)
+- **已复制源码**: [BCP](https://github.com/DeepMed-Lab-ECNU/BCP.git)
+- **已复制源码**: [EMC-Click](https://github.com/feiaxyt/EMC-Click.git)
+- **已复制源码**: [INBD](https://github.com/alexander-g/INBD.git)
+- **已复制源码**: [YOSO](https://github.com/hujiecpp/YOSO.git)
+- **已复制源码**: [PointWSSIS](https://github.com/clovaai/PointWSSIS.git)
