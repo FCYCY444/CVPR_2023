@@ -47,3 +47,4 @@
 - **已复制源码**: [ml-destseg](https://github.com/apple-aiml-research/ml-destseg.git)
 - **已复制源码**: [MP-Former](https://github.com/IDEA-Research/MP-Former.git)
 - **已复制源码**: [CVM_WS_Segmentation](https://github.com/hrzhang1123/CVM_WS_Segmentation.git)
+- **已复制源码**: [ml-autofocusformer](https://github.com/apple-aiml-research/ml-autofocusformer.git)
