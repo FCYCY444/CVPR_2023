@@ -42,3 +42,8 @@
 - **已复制源码**: [SimpleNet](https://github.com/DonaldRR/SimpleNet.git)
 - **已复制源码**: [cts-segmenter](https://github.com/tue-mps/cts-segmenter.git)
 - **已复制源码**: [DGCL](https://github.com/Gavinwxy/DGCL.git)
+- **已复制源码**: [MCF](https://github.com/WYC-321/MCF.git)
+- **已复制源码**: [UniMatch](https://github.com/LiheYoung/UniMatch.git)
+- **已复制源码**: [ml-destseg](https://github.com/apple-aiml-research/ml-destseg.git)
+- **已复制源码**: [MP-Former](https://github.com/IDEA-Research/MP-Former.git)
+- **已复制源码**: [CVM_WS_Segmentation](https://github.com/hrzhang1123/CVM_WS_Segmentation.git)
