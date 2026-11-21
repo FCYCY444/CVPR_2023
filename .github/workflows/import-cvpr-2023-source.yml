@@ -1,0 +1,85 @@
+name: Import CVPR 2023 licensed research source
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/import-cvpr-2023-source.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: cvpr-2023-import-source-snapshots
+  cancel-in-progress: false
+jobs:
+  copy-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out project collection
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          persist-credentials: true
+      - name: Import permitted upstream GitHub repositories as snapshots
+        shell: bash
+        env:
+          GIT_LFS_SKIP_SMUDGE: "1"
+          GIT_TERMINAL_PROMPT: "0"
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p import-reports
+          report="import-reports/latest-import.md"
+          printf '# CVPR 2023 参考代码导入报告\n\n' > "$report"
+          printf '此报告记录从原始 GitHub 仓库复制到汇总仓库的源码快照。不运行任何上游代码。\n\n' >> "$report"
+          failures=0
+          imported=0
+          batch=0
+          batchnum=0
+          while IFS='|' read -r folder url; do
+            [ -n "$folder" ] || continue
+            echo "::group::Import $folder"
+            temp="$(mktemp -d)"
+            if git -c core.hooksPath=/dev/null clone --depth 1 --single-branch --filter=blob:none --quiet "$url" "$temp/repo"; then
+              if find "$temp/repo" -maxdepth 1 -type f | grep -Eiq '/(LICENSE|LICENCE|COPYING)(\..*)?$'; then
+                rm -rf "$temp/repo/.git"
+                find "$temp/repo" -type f -size +95M -print | while IFS= read -r f; do
+                  printf -- '- **超大文件省略**: %s/%s (>95 MiB)\n' "$folder" "${f#"$temp/repo/"}" >> "$report"
+                  rm -f "$f"
+                done
+                mkdir -p "$folder"
+                cp -a "$temp/repo/." "$folder/"
+                git add -- "$folder"
+                printf -- '- **已复制源码**: [%s](https://github.com/%s)\n' "$folder" "${url#https://github.com/}" >> "$report"
+                imported=$((imported + 1))
+              else
+                printf -- '- **仅保留链接**: %s — 上游根目录找不到许可证文件，未重新发布代码；%s\n' "$folder" "$url" >> "$report"
+                failures=$((failures + 1))
+              fi
+            else
+              printf -- '- **导入失败**: %s — 无法克隆 %s\n' "$folder" "$url" >> "$report"
+              failures=$((failures + 1))
+            fi
+            rm -rf "$temp"
+            batch=$((batch + 1))
+            echo "::endgroup::"
+            if [ "$batch" -ge 5 ]; then
+              batchnum=$((batchnum + 1))
+              git add -- "$report"
+              if ! git diff --cached --quiet; then
+                git commit -m "Import CVPR 2023 licensed references batch $batchnum"
+                git push origin HEAD:main
+              fi
+              batch=0
+            fi
+          done < .github/source-import-list.tsv
+          git add -- "$report"
+          if ! git diff --cached --quiet; then
+            git commit -m "Finalize CVPR 2023 research source import report"
+            git push origin HEAD:main
+          fi
+          echo "Copied $imported upstream projects; errors or missing licenses: $failures"
+          if [ "$failures" -gt 0 ]; then
+            exit 1
+          fi
