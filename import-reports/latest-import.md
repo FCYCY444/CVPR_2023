@@ -27,3 +27,8 @@
 - **已复制源码**: [NViT](https://github.com/NVlabs/NViT.git)
 - **已复制源码**: [Semi-DETR](https://github.com/JCZ404/Semi-DETR.git)
 - **已复制源码**: [BiFormer](https://github.com/rayleizhu/BiFormer.git)
+- **已复制源码**: [DCNet](https://github.com/USTCL/DCNet.git)
+- **已复制源码**: [FEDER](https://github.com/ChunmingHe/FEDER.git)
+- **已复制源码**: [BoxTeacher](https://github.com/hustvl/BoxTeacher.git)
+- **已复制源码**: [FastInst](https://github.com/junjiehe96/FastInst.git)
+- **已复制源码**: [PIDNet](https://github.com/XuJiacong/PIDNet.git)
